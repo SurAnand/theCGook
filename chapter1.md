@@ -1,266 +1,113 @@
-# An Introduction to C
+# Preface
 
-## The form of a C program
+## About This Book
 
-If you're used to the block-structured form of, say, Pascal, then at the outer level the layout of a C program may surprise you. If your experience lies in the FORTRAN camp you will find it closer to what you already know, but the inner level will look quite different. C has borrowed shamelessly from both kinds of language, and from a lot of other places too. The input from so many varied sources has spawned a language a bit like a cross-bred terrier: inelegant in places, but a tenacious brute that the family is fond of. Biologists refer to this phenomenon as ‘hybrid vigour’. They might also draw your attention to the ‘chimera’, an artificial crossbreed of creatures such as a sheep and a goat. If it gives wool and milk, fine, but it might equally well just bleat and stink!
+This book was written with two groups of readers in mind. Whether you
+are new to C and want to learn it, or already know the older version of the
+language but want to find out more about the new standard, we hope that
+you will find what follows both instructive and at times entertaining too.
+This is not a tutorial introduction to programming. The book is designed
+for programmers who already have some experience of using a modern highlevel
+procedural programming language. As we explain later, C isn’t really
+appropriate for complete beginners–though many have managed to use it–
+so the book will assume that its readers have already done battle with the
+notions of statements, variables, conditional execution, arrays, procedures (or
+subroutines) and so on. Instead of wasting your time by ploughing through
+tedious descriptions of how to add two numbers together and explaining that
+the symbol for multiplication is __`*`__, the book concentrates on the things that
+are special to C. In particular, it’s the **way** that C is used which is emphasized.
+Those who already know C will be interested in the new Standard and how
+it affects existing C programs. The effect on existing programs might not
+at first seem to be important to newcomers, but in fact the ‘old’ and new
+versions of the language **are** an issue for the beginner too. For some years
+after the approval of the Standard, programmers will have to live in a world
+where they can easily encounter a mixture of both the new and the old
+language, depending on the age of the programs that they are working with.
+For that reason, the book highlights where the old and new features differ
+significantly. Some of the old features are no ornament to the language
+and are well worth avoiding; the Standard goes so far as to consider them
+obsolescent and recommends that they should not be used. For that reason
+they are not described in detail, but only far enough to allow a reader to
+understand what they mean. Anybody who intends to **write** programs using
+these old-style features should be reading a different book.
 
-At the coarsest level, an obvious feature is the multi-file structure of a program. The language permits *separate compilation*, where the parts of a complete program can be kept in one or more *source files* and compiled independently of each other. The idea is that the compilation process will produce files which can then be *linked* together using whatever link editor or loader that your system provides. The block structure of the Algol-like languages makes this harder by insisting that the whole program comes in one chunk, although there are usually ways of getting around it.
+This is the second edition of the book, which has been revised to refer to the final, approved version of the Standard. The first edition of the book was based on a draft of the Standard which did contain some differences from the draft that was eventually approved. During the revision we have taken the opportunity to include more summary material and an extra chapter illustrating the use of C and the Standard Library to solve a number of small problems.
 
-The reason for C's approach is historical and rather interesting. It is supposed to speed things up: the idea is that compiling a program into relocatable *object code* is slow and expensive in terms of resources; compiling is hard work. Using the loader to bind together a number of object code modules should simply be a matter of sorting out the absolute addresses of each item in the modules when combined into a complete program. This should be relatively inexpensive. The expansion of the idea to arrange for the loader to scan *libraries* of object modules, and select the ones that are needed, is an obvious one. The benefit is that if you change one small part of a program then the expense of recompiling all of it may be avoided; only the module that was affected has to be recompiled.
+## The Success of C
 
-All, the same, it's true that the more work put on to the loader, the slower it becomes, in fact sometimes it can be the slowest and most resource consuming part of the whole procedure. It is possible that, for some systems, it would be quicker to recompile everything in one go than to have to use the loader: Ada has sometimes been quoted as an example of this effect occurring. For C, the work that has to be done by the loader is not large and the approach is a sensible one. Figure 1.1 shows the way that this works.
+C is a remarkable language. Designed originally by one man, Dennis Ritchie, working at AT&T Bell Laboratories in New Jersey, it has increased in use until now it may well be one of the most widely-written computer languages in the world. The success of C is due to a number of factors, none of them key, but all of them important. Perhaps the most significant of all is that C was developed by real practioners of programming and was designed for practical day-to-day use, not for show or for demonstration. Like any well-designed tool, it falls easily to the hand and feels good to use. Instead of providing constraints, checks and rigorous boundaries, it concentrates on providing you with power and on not getting in your way.
 
-![Figure 1.1](../images/1.1.png)
+Because of this, it's better for professionals than beginners. In the early stages of learning to program you need a protective environment that gives feedback on mistakes and helps you to get results quickly—programs that run, even if they don't do what you meant. C is not like that! A professional forester would use a chain-saw to cut down trees quickly, aware of the dangers of touching the blade when the machine is running; C programmers work in a similar way. Although modern C compilers do provide a limited amount of feedback when they notice something that is out of the ordinary, you almost always have the option of forcing the compiler to do what you said you wanted and to stop it from complaining. Provided that what you said you wanted was what you really did want, then you'll get the result you expected. Programming in C is like eating red meat and drinking strong rum except your arteries and liver are more likely to survive it.
 
-*Figure 1.1. Separate compilation*
+Not only is C popular and a powerful asset in the armoury of the serious day-to-day programmer, there are other reasons for the success of this language. It has always been associated with the UNIX operating system and has benefited from the increasing popularity of that system. Although it is not the obvious first choice for writing large commercial data processing applications, C has the great advantage of always being available on commercial UNIX implementations. UNIX is written in C, so whenever UNIX is implemented on a new type of hardware, getting a C compiler to work for that system is the first task. As a result it is almost impossible to find a UNIX system without support for C, so the software vendors who want to target the UNIX marketplace find that C is the best bet if they want to get wide coverage of the systems available. Realistically, C is the first choice for portability of software in the UNIX environment.
 
-This technique is important in C, where it is common to find all but the smallest of programs constructed from a number of separate source files. Furthermore, the extensive use that C makes of libraries means that even trivial programs pass through the loader, although that might not be obvious at the first glance or to the newcomer.
+C has also gained substantially in use and availability from the explosive expansion of the Personal Computer market. C could almost have been designed specifically for the development of software for the PC—developers get not only the readability and productivity of a high-level language, but also the power to get the most out of the PC architecture **without** having to resort to the use of assembly code. C is practically unique in its ability to span two levels of programming; as well as providing high-level control of flow, data structures and procedures—all of the stuff expected in a modern high-level language—it also allows systems programmers to address machine words, manipulate bits and get close to the underlying hardware if they want to. That combination of features is very desirable in the competitive PC software markeplace and an increasing number of software developers have made C their primary language as a result.
 
-## Functions
+Finally, the extensibility of C has contributed in no small way to its popularity. Many other languages have failed to provide the file access and general input-output features that are needed for industrial-strength applications. Traditionally, in these languages I/O is built-in and is actually understood by the compiler. A master-stroke in the design of C (and interestingly, one of the strengths of the UNIX system too) has been to take the view that if you don't know how to provide a complete solution to a generic requirement, instead of providing half a solution (which invariably pleases nobody), you should allow the users to build their own. Software designers the world over have something to learn from this! It's the approach that has been taken by C, and not only for I/O. Through the use of library functions you can extend the language in many ways to provide features that the designers didn't think of. There's proof of this in the so-called Standard I/O Library (stdio), which matured more slowly than the language, but had become a sort of standard all of its own before the Standard Committee give it official blessing. It proved that it is possible to develop a model of file I/O and associated features that is portable to many more systems than UNIX, which is where it was first wrought. Despite the ability of C to provide access to low-level hardware features, judicious style and the use of the stdio package results in highly portable programs; many of which are to be found running on top of operating systems that look very different from one another. The nice thing about this library is that if you don't like what it does, but you have the appropriate technical skills, you can usually extend it to do what you do want, or bypass it altogether.
 
-A C program is built up from a collection of items such as *functions* and what we could loosely call *global variables*. All of these things are given names at the point where they are defined in the program; the way that the names are used to access those items from a given place in the program is governed by rules. The rules are described in the Standard using the term *linkage*. For the moment we only need to concern ourselves with *external linkage* and *no linkage*. Items with external linkage are those that are accessible throughout the program (library functions are a good example); items with no linkage are also widely used but their accessibility is much more restricted. Variables used inside functions are usually ‘local’ to the function; they have no linkage. Although this book avoids the use of complicated terms like those where it can, sometimes there isn't a plainer way of saying things. Linkage is a term that you are going to become familiar with later. The only external linkage that we will see for a while will be when we are using functions.
+## Standards
 
-Functions are C's equivalents of the functions and subroutines in FORTRAN, functions and procedures in Pascal and ALGOL. Neither BASIC in most of its simple mutations, nor COBOL has much like C's functions.
+Remarkably, C achieved its success in the absence of a formal standard. Even more remarkable is that during this period of increasingly widespread use, there has never been any serious divergence of C into the number of dialects that has been the bane of, for example, BASIC. In fact, this is not so surprising. There has always been a “language reference manual”, the widely-known book written by Brian Kernighan and Dennis Ritchie, usually referred to as simply “K&R”.
 
-The idea of a function is, of course, to allow you to encapsulate one idea or operation, give it a name, then to call that operation from various parts of the rest of your program simply by using the name. The detail of what is going on is not immediately visible at the point of use, nor should it be. In well designed, properly structured programs, it should be possible to change the way that a function does its job (as long as the job itself doesn't change) with no effect on the rest of the program.
+The C Programming Language,
 
-In a *hosted environment* there is one function whose name is special; it's the one called `main`. This function is the first one entered when your program starts running. In a *freestanding environment* the way that a program starts up is *implementation defined*; a term which means that although the Standard doesn't specify what must happen, the actual behaviour must be consistent and documented. When the program leaves the main function, the whole program comes to an end. Here's a simple program containing two functions:
+B.W. Kernighan and D. M. Ritchie,
 
-```
-#include <stdio.h>
+Prentice-Hall
 
-/*
-* Tell the compiler that we intend
-* to use a function called show_message.
-* It has no arguments and returns no value
-* This is the "declaration".
-*
-*/
+Englewood Cliffs,
 
-void show_message(void);
-/*
-* Another function, but this includes the body of
-* the function. This is a "definition".
-*/
-main(){
-     int count;
+New Jersey,
 
-     count = 0;
-     while(count < 10){
-             show_message();
-             count = count + 1;
-     }
+1978
 
-     return(0);
-}
+Further acting as a rigorous check on the expansion into numerous dialects, on UNIX systems there was only ever really one compiler for C; the so-called “Portable C Compiler”, originally written by Steve Johnson. This acted as a reference implementation for C—if the K&R reference was a bit obscure then the behaviour of the UNIX compiler was taken as the definition of the language.
+Despite this almost ideal situation (a reference manual and a reference implementation are extremely good ways of achieving stability at a very low cost), the increasing number of alternative implementations of C to be found in the PC world did begin to threaten the stability of the language.
 
-/*
-* The body of the simple function.
-* This is now a "definition".
-*/
-void show_message(void){
-     printf("hello\n");
-}
-```
-*Example 1.1*
+The X3J11 committee of the American National Standards Institute started work in the early 1980's to produce a formal standard for C. The committee took as its reference the K&R definition and began its lengthy and painstaking work. The job was to try to eliminate ambiguities, to define the undefined, to fix the most annoying deficiencies of the language and to preserve the spirit of C—all this as well as providing as much compatibility with existing practice as was possible. Fortunately, nearly all of the developers of the competing versions of C were represented on the committee, which in itself acted as a strong force for convergence right from the beginning.
 
-## A description of Example 1.1
+Development of the Standard took a long time, as standards often do. Much of the work is not just technical, although that is a very time-consuming part of the job, but also procedural. It's easy to underrate the procedural aspects of standards work, as if it somehow dilutes the purity of the technical work, but in fact it is equally important. A standard that has no agreement or consensus in the industry is unlikely to be widely adopted and could be useless or even damaging. The painstaking work of obtaining consensus among committee members is critical to the success of a practical standard, even if at times it means compromising on technical “perfection”, whatever that might be. It is a democratic process, open to all, which occasionally results in aberrations just as much as can excessive indulgence by technical purists, and unfortunately the delivery date of the Standard was affected at the last moment by procedural, rather than technical issues. The technical work was completed by December 1988, but it took a further year to resolve procedural objections. Finally, approval to release the document as a formal American National Standard was given on December 7th, 1989.
 
-### What was in it
+## Hosted and Free-Standing Environments
 
-Even such a small example has introduced a lot of C. Among other things, it contained two functions, a `#include` ‘statement’, and some *comment*. Since comment is the easiest bit to handle, let's look at that first.
+he dependency on the use of libraries to extend the language has an important effect on the practical use of C. Not only are the Standard I/O Library functions important to applications programmers, but there are a number of other functions that are widely taken almost for granted as being part of the language. String handling, sorting and comparison, character manipulation and similar services are invariably expected in all but the most specialized of applications areas.
 
-### Layout and comment
+Because of this unusually heavy dependency on libraries to do real work, it was most important that the Standard provided comprehensive definitions for the supporting functions too. The situation with the library functions was much more complicated than the relatively simple job of providing a tight definition for the language itself, because the library can be extended or modified by a knowledgeable user and was only partially defined in K&R. In practice, this led to numerous similar but different implementations of supporting libraries in common use. By far the hardest part of the work of the Committee was to reach a good definition of the library support that should be provided. In terms of benefit to the final user of C, it is this work that will prove to be by far and away the most valuable part of the Standard.
 
-The layout of a C program is not very important to the compiler, although for readability it is important to use this freedom to carry extra information for the human reader. C allows you to put space, tab or newline characters practically anywhere in the program without any special effect on the meaning of the program. All of those three characters are the same as far as the compiler is concerned and are called collectively *white* space, because they just move the printing position without causing any ‘visible’ printing on an output device. White space can occur practically anywhere in a program except in the middle of *identifiers*, *strings*, or *character constants*. An identifier is simply the name of a function or some other object; strings and character constants will be discussed later—don't worry about them for the moment.
+However, not all C programs are used for the same type of applications. The Standard Library is useful for ‘data processing’ types of applications, where file I/O and numeric and string oriented data are widely used. There is an equally important application area for C—the ‘embedded system’ area—which includes such things as process control, real-time and similar applications.
 
-Apart from the special cases, the only place that white space must be used is to separate things that would otherwise run together and become confused. In the example above, the fragment `void show_message` needs space to separate the two words, whereas `show_message(` could have space in front of the `(` or not, it would be purely a matter of taste.
+The Standard knows this and provides for it. A large part of the Standard is the definition of the library functions that must be supplied for hosted environments. A hosted environment is one that provides the standard libraries. The standard permits both hosted and freestanding environments. and goes to some length to differentiate between them. Who would want to go without libraries? Well, anybody writing ‘stand alone’ programs. Operating systems, embedded systems like machine controllers and firmware for instrumentation are all examples of the case where a hosted environment might be inappropriate. Programs written for a hosted environment have to be aware of the fact that the names of all the library functions are reserved for use by the implementation. There is no such restriction on the programmer working in a freestanding environment, although it isn't a good idea to go using names that are used in the standard library, simply because it will mislead readers of the program. [Chapter 9](http://publications.gbdirect.co.uk/c_book/chapter9/) describes the names and uses of the library functions.
 
-Comment is introduced to a C program by the pair of characters `/*`, which must not have a space between them. From then on, everything found up to and including the pair of characters `*/` is gobbled up and the whole lot is replaced by a single space. In Old C, this was not the case. The rule used to be that comment could occur anywhere that space could occur: the rule is now that comment is space. The significance of the change is minor and eventually becomes apparent in [Chapter 7](http://publications.gbdirect.co.uk/c_book/chapter7/) where we discuss the *preprocessor*. A consequence of the rule for the end of comment is that you can't put a piece of comment inside another piece, because the **first** `*/` pair will finish all of it. This is a minor nuisance, but you learn to live with it.
+## Typographical conventions
 
-It is common practice to make a comment stand out by making each line of multi-line comment always start with a `*`, as the example illustrates.
+The book tries to keep a consistent style in its use of special or technical terms. Words with a special meaning to C, such as reserved words or the names of *library functions*, are printed in a different typeface. Examples are `int` and `printf`. Terms used by the book that have a meaning not to C but in the Standard or the text of the book, are bold if they have not been introduced recently. They are **not** bold everywhere, because that rapidly annoys the reader. As you have noticed, italics are also used for emphasis from time to time, and to introduce loosely defined terms. Whether or not the name of a function, keyword or so on starts with a capital letter, it is nonetheless capitalized when it appears at the start of a sentence; this is one problem where either solution (capitalize or not) is unsatisfactory. Occasionally quote marks are used around ‘special terms’ if there is a danger of them being understood in their normal English meaning because of surrounding context. Anything else is at the whim of the authors, or simply by accident.
 
-### Preprocessor statements
+## Order of topics
 
-The first statement in the example is a *preprocessor directive*. In days gone by, the C compiler used to have two phases: the *preprocessor*, followed by the real compiler. The preprocessor was a *macro processor*, whose job was to perform simple textual manipulation of the program before passing the modified text on to be compiled. The preprocessor rapidly became seen as an essential aspect of the compiler and so has now been defined as part of the language and cannot be bypassed.
+The order of presentation of topics in this book loosely follows the order that is taught in The Instruction Set's introductory course. It starts with an overview of the essential parts of the language that will let you start to write useful programs quite quickly. The introduction is followed by a detailed coverage of the material that was ignored before, then it goes on to discuss the standard libraries in depth. This means that in principle, if you felt so inclined, you could read the book as far as you like and stop, yet still have learnt a reasonably coherent subset of the language. Previous experience of C will render [Chapter 1](http://publications.gbdirect.co.uk/c_book/chapter1/) a bit slow, but it is still worth persevering with it, if only once.
 
-The preprocessor only knows about **lines** of text; unlike the rest of the language it is sensitive to the end of a line and though it is possible to write multi-line preprocessor directives, they are uncommon and a source of some wonder when they are found. Any line whose first visible character is a # is a preprocessor directive.
+## Example programs
 
-In Example 1.1 the preprocessor directive `#include` causes the line containing it to be replaced completely by the contents of another file. In this case the filename is found between the `<` and `>` brackets. This is a widely used technique to incorporate the text of standard *header files* into your program without having to go through the effort of typing it all yourself. The `<stdio.h>` file is an important one, containing the necessary information that allows you to use the standard library for input and output. If you want to use the I/O library you **must** include `<stdio.h>`. Old C was more relaxed on this point.
+All but the smallest of the examples shown in the text have been tested using a compiler that claims to conform to the Standard. As a result, most of them stand a good chance of being correct, unless our interpretation of the Standard was wrong and the compiler developer made the same mistake. None the less, experience warns that despite careful checking, **some** errors are bound to creep in. Please be understanding with any errors that you may find.
 
-#### Define statements
+## Deference to Higher Authority
 
-Another of the preprocessor's talents which is widely exploited is the `#define` statement. It is used like this:
+This book is an attempt to produce a readable and enlightening description of the language defined by the Standard. It sets out to to make interpretations of what the Standard actually means but to express them in ‘simpler’ English. We've done our best to get it right, but you must never forget that the only place that the language is fully defined is in the Standard itself. It is entirely possible that what we interpret the Standard to mean is at times not what the Standard Committee sought to specify, or that the way we explain it is looser and less precise than it is in the Standard. If you are in any doubt: READ THE STANDARD! It's not meant to be read for pleasure, but it is meant to be accurate and unambiguous; look nowhere else for the authoritative last word.
 
-```
-#define IDENTIFIER      replacement
-```
+## Address for the Standard
 
-which says that the name represented by `IDENTIFIER` will be replaced by the text of replacement whenever `IDENTIFIER` occurs in the program text. Invariably, the identifier is a name in upper-case; this is a stylistic convention that helps the reader to understand what is going on. The replacement part can be any text at all—remember the preprocessor doesn't know C, it just works on text. The most common use of the statement is to declare names for constant numbers:
+Copies of the Standard can be obtained from:
+X3 Secretariat,
 
-```
-#define PI             3.141592
-#define SECS_PER_MIN   60
-#define MINS_PER_HOUR  60
-#define HOURS_PER_DAY  24
-```
+> CBEMA, 311 First Street, NW, Suite 500, Washington DC 20001-2178, USA.
 
-and to use them like this
+>Phone (+1) (202) 737 8888
 
-```
-circumf = 2*PI*radius;
-if(timer >= SECS_PER_MIN){
-mins = mins+1;
-        timer = timer - SECS_PER_MIN;
-}
-```
 
-the output from the preprocessor will be as if you had written this:
+*Mike Banahan*
 
-```
-circumf = 2*3.141592*radius;
-if(timer >= 60){
-        mins = mins+1;
-       timer = timer - 60;
-}
-```
+*Declan Brady*
 
-### Summary
+*Mark Doran*
 
-Preprocessor statements work on a line-by-line basis, the rest of C does not.
-
-`#include` statements are used to read the contents of a specified file, typically to facilitate the use of library functions.
-
-`#define` statements are typically used to give names for constants. By convention, the names are in upper case (capitalized).
-
-### Function declaration and definition
-
-#### Declaration
-
-After the `<stdio.h>` file is included comes a *function declaration*; it tells the compiler that `show_message` is a function which takes no arguments and returns no values. This demonstrates one of the changes made by the Standard: it is an example of a *function prototype*, a subject which [Chapter 4](http://publications.gbdirect.co.uk/c_book/chapter4/) discusses in detail. It isn't always necessary to declare functions in advance—C will use some (old) default rules in such cases—but it is now strongly recommended that you **do** declare them in advance. The distinction between a declaration and a *definition* is that the former simply describes the type of the function and any arguments that it might take, the latter is where the body of a function is provided. These terms become more important later.
-
-By declaring `show_message` before it is used, the compiler is able to check that it is used correctly. The declaration describes three important things about the function: its name, its type, and the number and type of its arguments. The `void show_message(` part indicates that it is a function and that it returns a value of type `void`, which is discussed in a moment. The second use of `void` is in the declaration of the function's argument list, `(void)`, which indicates that there are **no** arguments to this function.
-
-#### Definition
-
-Right at the end of the program is the function definition itself; although it is only three lines long, it usefully illustrates a complete function.
-
-In C, functions perform the tasks that some other languages split into two parts. Most languages use a function to return a value of some sort, typical examples being perhaps trigonometric functions like sin, cos, or maybe a square root function; C is the same in this respect. Other similar jobs are done by what look very much like functions but which don't return a value: FORTRAN uses *subroutines*, Pascal and Algol call them *procedures*. C simply uses functions for all of those jobs, with the **type** of the function's return value specified when the function is defined. In the example, the function `show_message` doesn't return a value so we specify that its type is `void`.
-
-The use of `void` in that way is either crashingly obvious or enormously subtle, depending on your viewpoint. We could easily get involved here in an entertaining (though fruitless) philosophical side-track on whether `void` really is a value or not, but we won't. Whichever side of the question you favour, it's clear that you can't do anything with a `void` and that's what it means here—“I don't want to do anything with any value this function might or might not return”.
-
-The type of the function is `void`, its name is `show_message`. The parentheses `()` following the function name are needed to let the compiler know that at this point we are talking about a function and not something else. If the function did take any arguments, then their names would be put between the parentheses. This one doesn't take any, which is made explicit by putting `void` between the parentheses.
-
-For something whose essence is emptiness, abnegation and rejection, `void` turns out to be pretty useful.
-
-The body of the function is a *compound statement*, which is a sequence of other statements surrounded by curly brackets `{}`. There is only one statement in there, but the brackets are still needed. In general, C allows you to put a compound statement anywhere that the language allows the use of a single simple statement; the job of the brackets being to turn several statements in a row into what is effectively a single statement.
-
-It is reasonable to ask whether or not the brackets are strictly needed, if their only job is to bind multiple statements into one, yet all that we have in the example is a single statement. Oddly, the answer is yes—they **are** strictly needed. The only place in C where you can't put a single statement but **must** have a compound statement is when you are defining a function. The simplest function of all is therefore the empty function, which does nothing at all:
-
-```
-void do_nothing(void){}
-```
-
-The statement inside `show_message` is a call of the library function `printf. printf` is used to format and print things, this example being one of the simplest of its uses. `printf` takes one or more arguments, whose values are passed forward from the point of the call into the function itself. In this case the argument is a *string*. The contents of the string are interpreted by `printf` and used to control the way the values of the other arguments are printed. It bears a little resemblance to the FORMAT statement in FORTRAN; but not enough to predict how to use it.
-
-### Summary
-
-*Declarations* are used to introduce the name of a function, its return type and the type (if any) of its arguments.
-
-A function *definition* is a declaration with the body of the function given too.
-
-A function returning no value should have its type declared as `void`. For example, `void func(/* list of arguments */);`
-
-A function taking no arguments should be declared with `void` as its argument list. For example, `void func(void);`
-
-### Strings
-
-In C, strings are a sequence of characters surrounded by quote marks:
-
-```
-"like this"
-```
-
-Because a string is a single element, a bit like an identifier, it is not allowed to continue across a line—although space or tab characters are permitted inside a string.
-
-```
-"This is a valid string"
-"This has a newline in it
-and is NOT a valid string"
-```
-
-To get a very long string there are two things that you can do. You could take advantage of the fact that absolutely everywhere in a C program, the sequence ‘backslash end-of-line’ disappears totally.
-
-```
-"This would not be valid but doesn't have \
-a newline in it as far as the compiler is concerned"
-```
-
-The other thing you could do is to to use the string joining feature, which says that two adjacent strings are considered to be just one.
-
-```
-"All this " "comes out as "
-"just one string"
-```
-
-Back to the example. The sequence `‘\n’` in the string is an example of an *escape* sequence which in this case represents ‘newline’. `Printf` simply prints the contents of the string on the program's output file, so the output will read ‘hello’, followed by a new line.
-
-To support people working in environments that use character sets which are ‘wider’ than U.S. ASCII, such as the shift-JIS representation used in Japan, the Standard now allows *multibyte characters* to be present in strings and comments. The Standard defines the 96 characters that are the alphabet of C (see [Chapter 2](http://publications.gbdirect.co.uk/c_book/chapter2/)). If your system supports an extended character set, the only place that you may use these extended characters is in strings, character constants, comment and the names of *header files*. Support for extended character sets is an implementation defined feature, so you will have to look it up in your system's documentation.
-
-### The main function
-
-In Example 1.1 there are actually two functions, `show_message` and `main`. Although `main` is a bit longer than `show_message` it is obviously built in the same shape: it has a name, the parentheses `()` are there, followed by the opening bracket `{` of the compound statement that must follow in a function definition. True, there's a lot more stuff too, but right at the end of the example you'll find the matching closing bracket `}` that goes with the first one to balance the numbers.
-
-This is a much more realistic function now, because there are several statements inside the function body, not just one. You might also have noticed that the function is **not** declared to be `void`. There is a good reason for this: it returns a proper value. Don't worry about its arguments yet; they are discussed in [Chapter 10](http://publications.gbdirect.co.uk/c_book/chapter10/).
-
-The most important thing about `main` is that it is the first function to be called. In a hosted environment your C language system arranges, magically, for a call on the `main` function (hence its name) when the program is first started. When the function is over, so is the program. It's obviously an important function. Equally important is the stuff **inside** `main`'s compound statement. As mentioned before, there can be several statements inside a compound statement, so let's look at them in turn.
-
-### Declarations
-
-The first statement is this:
-
-```
-int count;
-```
-
-which is not an instruction to do anything, but simply introduces a variable to the program. It declares something whose name is `count`, and whose type is ‘integer’; in C the keyword that declares integers is unaccountably shortened to `int`. C has an idiosyncratic approach to these keywords with some having their names spelled in full and some being shortened like `int`. At least `int` has a meaning that is more or less intuitive; just wait until we get on to `static`.
-
-As a result of that declaration the compiler now knows that there is something that will be used to store integral quantities, and that its name is `count`. In C, all variables must be declared before they are used; there is none of FORTRAN's implicit declarations. In a compound statement, all the declarations must come first; they must precede any ‘ordinary’ statements and are therefore somewhat special.
-
-(Note for pedants: unless you specifically ask, the declaration of a variable like `count` is also a *definition*. The distinction will later be seen to matter.)
-
-### Assignment statement
-
-Moving down the example we find a familiar thing, an *assignment statement*. This is where the first value is assigned to the variable `count`, in this case the value assigned is a constant whose value is zero. Prior to the assignment, the value of `count` was undefined and unsafe to use. You might be a little surprised to find that the assignment symbol (strictly speaking an *assignment operator*) is a single `=` sign. This is not fashionable in modern languages, but hardly a major blemish.
-
-So far then, we have declared a variable and assigned the value of zero to it. What next?
-
-### The while statement
-
-Next is one of C's loop control statements, the while statement. Look carefully at its form. The formal description of the while statement is this:
-
-```
-while(expression)
-        statement
-```
-
-Is that what we have got? Yes it is. The bit that reads
-
-```
-count < 10
-```
-
-is a *relational expression*, which is an example of a valid expression, and the expression is followed by a compound statement, which is a form of valid statement. As a result, it fits the rules for a properly constructed `while` statement.
-
-What it does must be obvious to anyone who has written programs before. For as long as the relationship `count < 10` holds true, the body of the loop is executed and the comparison repeated. If the program is ever to end, then the body of the loop must do something that will eventually cause the comparison to be false: of course it does.
-
-There are just two statements in the body of the loop. The first one is a function call, where the function `show_message` is invoked. A function call is indicated by the name of the function followed by the parentheses `()` which contain its argument list—if it takes no arguments, then you provide none. If there were any arguments, they would be put between the parentheses like this:
-
-```
-/* call a function with several arguments */
-function_name(first_arg, second_arg, third_arg);
-```
-
-and so on. The call of `printf` is another example. More is explained in [Chapter 4](http://publications.gbdirect.co.uk/c_book/chapter4/).
-
-The last statement in the loop is another assignment statement. It adds one to the variable `count`, so that the requirement for program to stop will eventually be met.
+January 1991
